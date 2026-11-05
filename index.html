@@ -165,3 +165,29 @@ updateStats();loadComm();
     🚪 ENTRER DANS LA MAISON →
   </a>
 </div>
+<script>
+function showPage(id){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+window.scrollTo(0,0);
+}
+async function askAI(){
+let input=document.getElementById('aiInput');
+let chat=document.getElementById('aiChat');
+let q=input.value.trim();
+if(!q) return;
+input.value='';
+chat.innerHTML+='<div><b>Toi:</b> '+q+'</div>';
+chat.innerHTML+='<div id="thinking">🤔 Je réfléchis à : "'+q+'" ... Je cherche sur Wikipédia...</div>';
+chat.scrollTop=chat.scrollHeight;
+let reponse='';
+try{
+let r=await fetch('https://fr.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(q));
+if(r.ok){ let d=await r.json(); if(d.extract){ reponse=d.extract+'<br><br>---<br>Source : Wikipédia'; } }
+}catch(e){}
+if(!reponse){ reponse='Je n\'ai pas trouvé d\'info sur "'+q+'". Essaie : C\'est quoi Bamako ?'; }
+let th=document.getElementById('thinking'); if(th) th.remove();
+chat.innerHTML+='<div><b>AI:</b> '+reponse+'</div>';
+chat.scrollTop=chat.scrollHeight;
+}
+</script>
