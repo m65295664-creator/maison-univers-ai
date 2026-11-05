@@ -110,16 +110,40 @@ function register(){let n=document.getElementById('regName').value.trim(),e=docu
 function login(){let e=document.getElementById('logEmail').value.trim(),p=document.getElementById('logPass').value;let users=JSON.parse(localStorage.getItem('mu_users')||'[]');let u=users.find(x=>x.e==e&&x.p==p);if(u){document.getElementById('logMsg').innerHTML='<span class="success">✅ Bienvenue '+u.n+' ! Tu es connecté.</span>';document.getElementById('userInfo').innerHTML='Connecté comme : <b>'+u.n+'</b> ('+u.e+')';document.getElementById('mySpace').innerHTML='👋 Salut <b>'+u.n+'</b> !<br><br>✅ Ton compte est actif.<br>✅ Tu peux utiliser l’Assistant AI<br>✅ Tu peux discuter dans la Communauté<br>✅ Tu peux demander un Service<br><br>Bienvenue dans TA Maison.';localStorage.setItem('mu_current',JSON.stringify(u))}else{document.getElementById('logMsg').innerHTML='<span class="error">❌ Email ou mot de passe incorrect. Inscris-toi d’abord en haut.</span>'}}
 function logout(){localStorage.removeItem('mu_current');document.getElementById('mySpace').innerHTML='Tu es déconnecté. Reconnecte-toi.';document.getElementById('logMsg').innerHTML='Déconnecté. À bientôt !'}
 function quickAsk(t){document.getElementById('aiInput').value=t;askAI()}
-async function askAI(){let q=document.getElementById('aiInput').value.trim();if(!q)return;let chat=document.getElementById('aiChat');chat.innerHTML+='<div class="msg"><b>Toi:</b> '+q+'</div>';document.getElementById('aiInput').value='';let tmp=document.createElement('div');tmp.className='msg';tmp.innerHTML='<b>AI:</b> Je réfléchis...';chat.appendChild(tmp);chat.scrollTop=chat.scrollHeight;let rep='';let low=q.toLowerCase();
-if(low.includes('bonjour')||low.includes('salut'))rep='Bonjour ! Bienvenue à La Maison Univers AI 👋 Je suis là pour t’aider. Tu veux de l’aide pour les devoirs, le business, une lettre ou une recherche ? Dis-moi.';
-else if(low.includes('qui es')||low.includes('maison univers'))rep='Je suis l’Assistant de LA MAISON UNIVERS AI, créé à Bamako au Mali 🇲🇱. Je peux t’aider à apprendre, chercher, écrire, traduire et créer. Comme ChatGPT, mais dans ta Maison, en français simple.';
-else if(low.includes('business')&&low.includes('bamako'))rep='Excellente idée ! À Bamako, 3 business qui marchent : 1) Vente en ligne (habits, téléphones), 2) Service de livraison, 3) Formation / aide aux devoirs. Tu as combien comme budget de départ ? Dis-moi et je te fais un plan complet.';
-else if(low.includes('lettre'))rep='Je t’aide pour ta lettre ! Voici la structure : 1) Ton nom + date en haut, 2) Objet : ... , 3) Madame/Monsieur, 4) Explique ta demande en 3 phrases, 5) Merci + Signature. Dis-moi : c’est une lettre pour quoi ? École, travail, administration ? Je te l’écris complète.';
-else if(low.includes('devoir')||low.includes('exposé')||low.includes('math'))rep='On va réussir ton devoir ensemble ! Dis-moi : c’est quelle matière et c’est quoi le sujet exact ? Exemple : "Exposé sur le Mali" ou "Exercice de maths". Je te donne le plan + la réponse expliquée.';
-else if(low.includes('traduis')||low.includes('anglais'))rep='Pour traduire : "Bonjour" en anglais = "Hello", "Merci" = "Thank you", "Comment ça va ?" = "How are you ?". Dis-moi la phrase exacte que tu veux traduire et je te la traduis en anglais, bambara ou français.';
-else if(low.includes('mali')||low.includes('bamako'))rep='Le Mali est un grand pays d’Afrique de l’Ouest. Sa capitale est Bamako. Langues : français + bambara. Le Mali est connu pour sa culture, sa musique, son histoire avec l’Empire du Mali et Tombouctou. Tu veux un exposé complet sur le Mali ? Dis "oui, exposé Mali" et je te le prépare.';
-else if(low.includes('merci'))rep='De rien ! C’est ma mission dans La Maison Univers AI. Tu as une autre question ? Je suis là 24h/24.';
-else{try{let r=await fetch('https://fr.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(q));let d=await r.json();if(d.extract)rep=d.extract.slice(0,700)+'... <br><br>(Source: Wikipédia - La Maison Univers AI)';else rep='Très bonne question sur "'+q+'". Voici mon conseil : 1) Définis ton objectif, 2) Cherche 3 informations clés, 3) Je t’aide à écrire la réponse. Dis-moi plus de détails : c’est pour l’école, le business ou juste pour savoir ?'}catch(e){rep='Merci pour ta question sur "'+q+'". Dis-moi plus de détails et je te donne une réponse complète, étape par étape. C’est pour l’école, le business ou un projet ?'}}
+async function askAI(){
+let input=document.getElementById('aiInput');
+let chat=document.getElementById('aiChat');
+let q=input.value.trim();
+if(!q) return;
+input.value='';
+chat.innerHTML+='<div><b>Toi:</b> '+q+'</div>';
+chat.innerHTML+='<div id="thinking">🤔 Je réfléchis à : "'+q+'" ... Je cherche sur Wikipédia...</div>';
+chat.scrollTop=chat.scrollHeight;
+let reponse='';
+try{
+let url='https://fr.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(q);
+let r=await fetch(url);
+if(r.ok){
+let d=await r.json();
+if(d.extract){ reponse=d.extract+'<br><br>---<br>Source : Wikipédia - Recherche réelle sur "'+q+'"'; }
+}
+}catch(e){}
+if(!reponse){
+try{
+let url2='https://api.duckduckgo.com/?q='+encodeURIComponent(q)+'&format=json&no_html=1&skip_disambig=1';
+let r2=await fetch(url2);
+let d2=await r2.json();
+if(d2.AbstractText){ reponse=d2.AbstractText+'<br><br>---<br>Source : Recherche mondiale'; }
+}catch(e){}
+}
+if(!reponse){
+reponse='Je n\'ai pas trouvé d\'info fiable sur "'+q+'" dans mes sources vérifiées. Peux-tu préciser ? Exemple : "C\'est quoi Bamako ?" Je préfère te dire que je ne sais pas, plutôt que d\'inventer.';
+}
+let th=document.getElementById('thinking');
+if(th) th.remove();
+chat.innerHTML+='<div><b>AI:</b> '+reponse+'</div>';
+chat.scrollTop=chat.scrollHeight;
+  }
 tmp.innerHTML='<b>AI:</b> '+rep;chat.scrollTop=chat.scrollHeight}
 async function rechercher(){let q=document.getElementById('searchInput').value.trim();if(!q)return;let box=document.getElementById('searchResult');box.innerHTML='<div class="card">🔍 Recherche mondiale en cours pour : <b>'+q+'</b>...</div>';try{let r=await fetch('https://fr.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(q));let d=await r.json();if(d.extract){box.innerHTML='<div class="card"><h2>'+d.title+'</h2><p>'+d.extract.slice(0,900)+'</p><br><a style="color:#FFC700" href="https://fr.wikipedia.org/wiki/'+encodeURIComponent(q)+'" target="_blank">Voir sur Wikipédia →</a> &nbsp; | &nbsp; <a style="color:#FFC700" href="https://www.google.com/search?q='+encodeURIComponent(q)+'" target="_blank">Voir sur Google →</a> &nbsp; | &nbsp; <a style="color:#FFC700" href="https://www.youtube.com/results?search_query='+encodeURIComponent(q)+'" target="_blank">Voir Vidéos →</a></div>'}else{box.innerHTML='<div class="card">Pas trouvé sur Wikipédia. <a style="color:#FFC700" href="https://www.google.com/search?q='+encodeURIComponent(q)+'" target="_blank">Chercher "'+q+'" sur Google →</a></div>'}}catch(e){box.innerHTML='<div class="card"><a style="color:#FFC700" href="https://www.google.com/search?q='+encodeURIComponent(q)+'" target="_blank">Chercher "'+q+'" sur Google →</a></div>'}}
 function loadComm(){let m=JSON.parse(localStorage.getItem('mu_msgs')||'[]');document.getElementById('commChat').innerHTML=m.map(x=>'<div class="msg"><b>'+x.n+':</b> '+x.t+'</div>').join('')||'<div class="msg">Aucun message. Sois le premier à parler dans la Maison !</div>';let c=document.getElementById('commChat');c.scrollTop=c.scrollHeight}
