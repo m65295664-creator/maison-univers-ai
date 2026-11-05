@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LA MAISON UNIVERS AI - Plateforme Mondiale</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#050B1A;color:#fff;line-height:1.5}
+header{background:#0A1633;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:99}
+.logo{font-weight:900;font-size:18px;color:#FFC700}
+.logo span{color:#fff;font-weight:400}
+nav{display:flex;gap:6px;flex-wrap:wrap}
+nav button{background:#1E2F5E;color:#fff;border:1px solid #FFC700;padding:8px 10px;border-radius:20px;cursor:pointer;font-size:13px}
+.hero{padding:35px 18px;text-align:center;background:linear-gradient(180deg,#0A1633,#1A2E6B,#050B1A)}
+.hero h1{font-size:32px;line-height:1.1}.hero h1 span{color:#FFC700}
+.hero p{opacity:.85;margin:12px 0}
+.badge{display:inline-block;background:#FFC700;color:#000;padding:6px 12px;border-radius:20px;font-weight:bold;font-size:12px;margin:5px}
+.search-box{background:#fff;border-radius:30px;padding:5px;display:flex;max-width:650px;margin:20px auto}
+.search-box input{flex:1;border:0;outline:0;padding:12px;border-radius:30px;font-size:15px}
+.search-box button{background:#FFC700;border:0;padding:12px 18px;border-radius:25px;font-weight:bold;cursor:pointer}
+.container{max-width:920px;margin:auto;padding:18px}
+.card{background:#101B3D;border-radius:16px;padding:20px;margin-bottom:18px;border:1px solid #1E2F5E}
+.card h2{margin-bottom:10px;color:#FFC700}
+input,textarea,select{width:100%;padding:13px;margin:7px 0;border-radius:10px;border:0;font-size:15px}
+.btn{background:#FFC700;color:#000;padding:13px;border:0;border-radius:10px;width:100%;font-weight:900;cursor:pointer;font-size:15px;margin-top:8px}
+.btn2{background:#fff;color:#000;padding:11px 14px;border:0;border-radius:10px;cursor:pointer;font-weight:bold}
+.chat{height:230px;overflow:auto;background:#050B1A;padding:12px;border-radius:12px;margin:10px 0;border:1px solid #1E2F5E}
+.msg{background:#1E2F5E;padding:9px 10px;border-radius:10px;margin:6px 0;font-size:14px}
+.msg b{color:#FFC700}
+.hidden{display:none}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px}
+.tabs button{flex:1;min-width:140px;background:#1E2F5E;color:#fff;border:0;padding:13px;border-radius:12px;cursor:pointer;font-weight:bold}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.service{background:#1E2F5E;padding:16px;border-radius:13px;text-align:center}
+.service h3{margin:6px 0}.service p{font-size:13px;opacity:.8}
+.small{font-size:13px;opacity:.75}
+.success{color:#00FF88;font-weight:bold}
+.error{color:#FF5555;font-weight:bold}
+footer{text-align:center;padding:25px;opacity:.6;font-size:13px}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.hero h1{font-size:26px}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">🏠 LA MAISON <span>UNIVERS AI</span></div>
+<nav>
+<button onclick="show('accueil')">🏠 Accueil</button>
+<button onclick="show('assistant')">🤖 Assistant</button>
+<button onclick="show('auth')">👤 Compte</button>
+<button onclick="show('comm')">💬 Discuter</button>
+</nav>
+</header>
+<div id="accueil">
+<div class="hero">
+<div><span class="badge">✨ 100% GRATUIT</span> <span class="badge">🌍 MONDIAL</span> <span class="badge">🇲🇱 BAMAKO - MALI</span></div>
+<h1>Bienvenue à<br><span>LA MAISON UNIVERS AI</span></h1>
+<p>Ton Assistant AI + Ton Moteur de Recherche Mondial + Ta Communauté.<br>Pour apprendre, chercher, créer et communiquer. Comme ChatGPT et Google, mais dans TA Maison.</p>
+<div class="search-box"><input id="searchInput" placeholder="🔍 Rechercher dans le monde... ex: Bamako, santé, football, business"><button onclick="rechercher()">Rechercher</button></div>
+<div id="searchResult"></div>
+<p class="small">Exemples: tape "Mali" ou "Football" et clique Rechercher</p>
+</div>
+<div class="container">
+<div class="tabs">
+<button onclick="show('assistant')">🤖 Parler à l'Assistant AI</button>
+<button onclick="show('auth')">👤 Créer mon Compte Gratuit</button>
+<button onclick="show('comm')">💬 Discuter avec la Communauté</button>
+<button onclick="show('services')">🛎️ Voir les Services</button>
+</div>
+<div class="grid">
+<div class="service"><div style="font-size:35px">🤖</div><h3>Assistant AI</h3><p>Pose ta question, il répond, il explique, il aide pour devoirs, business, lettres.</p><br><button class="btn2" onclick="show('assistant')">Utiliser →</button></div>
+<div class="service"><div style="font-size:35px">🌍</div><h3>Recherche Mondiale</h3><p>Cherche tout sur internet : pays, personnes, santé, histoire, actualités.</p><br><button class="btn2" onclick="document.getElementById('searchInput').focus()">Chercher →</button></div>
+<div class="service"><div style="font-size:35px">👥</div><h3>Communauté</h3><p>Discute avec les autres utilisateurs de La Maison Univers, partout dans le monde.</p><br><button class="btn2" onclick="show('comm')">Discuter →</button></div>
+<div class="service"><div style="font-size:35px">🏠</div><h3>Services Maison Univers</h3><p>Création de site, logo, CV, business, aide aux études. 100% pour toi.</p><br><button class="btn2" onclick="show('services')">Voir →</button></div>
+</div>
+<div class="card"><h2>⭐ Pourquoi La Maison Univers AI ?</h2><p>✅ <b>Gratuit</b> pour tout le monde<br>✅ <b>En français</b>, simple pour l'Afrique<br>✅ <b>Disponible 24h/24</b> sur téléphone<br>✅ <b>Ton compte personnel</b> sécurisé<br>✅ <b>Créé à Bamako</b> par La Maison Univers</p></div>
+<div class="card"><h2>📊 Aujourd'hui dans la Maison</h2><p id="stats">Chargement...</p></div>
+</div>
+</div>
+<div id="assistant" class="container hidden">
+<div class="card"><h2>🤖 Assistant AI - LA MAISON UNIVERS AI</h2><p>Bonjour ! Je suis ton assistant personnel. Pose-moi n'importe quelle question.</p>
+<div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn2" onclick="quickAsk('Aide-moi pour mes devoirs')">📚 Devoirs</button><button class="btn2" onclick="quickAsk('Aide-moi à écrire une lettre')">✉️ Lettre</button><button class="btn2" onclick="quickAsk('Donne-moi une idée de business à Bamako')">💼 Business</button><button class="btn2" onclick="quickAsk('Traduis bonjour en anglais')">🌍 Traduction</button></div>
+<div class="chat" id="aiChat"><div class="msg"><b>AI:</b> Bonjour 👋 Bienvenue à La Maison Univers AI. Je peux t'aider pour les études, le business, les lettres, la traduction, la recherche. Que veux-tu aujourd'hui ?</div></div>
+<input id="aiInput" placeholder="Écris ta question ici... ex: C'est quoi le Mali ?"><button class="btn" onclick="askAI()">Envoyer à l'Assistant AI →</button>
+<p class="small">Astuce: Plus ta question est précise, meilleure est ma réponse.</p></div>
+</div>
+<div id="auth" class="container hidden">
+<div class="card"><h2>👤 Créer un Compte Gratuit</h2><p>Crée ton compte pour avoir ton espace personnel dans la Maison.</p><input id="regName" placeholder="Ton nom complet - ex: Moussa Diarra"><input id="regEmail" placeholder="Ton email - ex: moussa@gmail.com"><input id="regPass" type="password" placeholder="Choisis un mot de passe"><button class="btn" onclick="register()">S'inscrire Gratuitement →</button><p id="regMsg"></p></div>
+<div class="card"><h2>🔐 Se Connecter à Mon Compte</h2><input id="logEmail" placeholder="Ton email"><input id="logPass" type="password" placeholder="Ton mot de passe"><button class="btn" onclick="login()">Se Connecter →</button><p id="logMsg"></p><p id="userInfo"></p></div>
+<div class="card"><h2>👑 Mon Espace Personnel</h2><p id="mySpace">Connecte-toi pour voir ton espace.</p><button class="btn2" onclick="logout()">Se Déconnecter</button></div>
+</div>
+<div id="comm" class="container hidden">
+<div class="card"><h2>💬 Communication - Communauté Maison Univers</h2><p>Discute ici avec tout le monde. Respect et partage.</p><div class="chat" id="commChat"></div><input id="commName" placeholder="Ton nom - ex: Awa"><input id="commMsg" placeholder="Ton message..."><button class="btn" onclick="sendComm()">Envoyer mon message →</button></div>
+</div>
+<div id="services" class="container hidden">
+<div class="card"><h2>🛎️ Services de La Maison Univers AI</h2><div class="grid">
+<div class="service">📚<h3>Aide Études</h3><p>Devoirs, exposés, mathématiques, français</p></div>
+<div class="service">💼<h3>Business & CV</h3><p>CV pro, lettre de motivation, idée business</p></div>
+<div class="service">🌍<h3>Traduction</h3><p>Français - Anglais - Bambara - Autres</p></div>
+<div class="service">📱<h3>Création Site & Logo</h3><p>On crée ton site comme celui-ci</p></div>
+<div class="service">✉️<h3>Lettres Officielles</h3><p>Demande, plainte, invitation</p></div>
+<div class="service">🎓<h3>Formation AI</h3><p>Apprendre à utiliser l'IA</p></div>
+</div><br><p><b>Contact:</b> La Maison Univers AI - Bamako, Mali<br><b>WhatsApp:</b> Écris-nous pour commander un service</p><button class="btn" onclick="alert('Merci ! Pour commander, écris à La Maison Univers AI sur WhatsApp. On te répond vite.')">Commander un Service →</button></div>
+</div>
+<footer>© 2026 LA MAISON UNIVERS AI - Bamako, Mali<br>Créé avec ❤️ pour le monde entier - Tous droits réservés<br><br><button class="btn2" onclick="show('accueil')">Retour à l'Accueil</button></footer>
+<script>
+function show(id){['accueil','assistant','auth','comm','services'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');window.scrollTo(0,0);if(id=='comm')loadComm();updateStats()}
+function updateStats(){let u=JSON.parse(localStorage.getItem('mu_users')||'[]');let m=JSON.parse(localStorage.getItem('mu_msgs')||'[]');document.getElementById('stats').innerHTML='👥 <b>'+u.length+'</b> comptes créés sur ce téléphone &nbsp;|&nbsp; 💬 <b>'+m.length+'</b> messages dans la communauté &nbsp;|&nbsp; 🤖 Assistant: <b>En ligne 24h/24</b>'}
+function register(){let n=document.getElementById('regName').value.trim(),e=document.getElementById('regEmail').value.trim(),p=document.getElementById('regPass').value;if(!n||!e||!p){document.getElementById('regMsg').innerHTML='<span class="error">Remplis tout s’il te plaît : nom + email + mot de passe</span>';return}let users=JSON.parse(localStorage.getItem('mu_users')||'[]');if(users.find(x=>x.e==e)){document.getElementById('regMsg').innerHTML='<span class="error">Cet email existe déjà. Connecte-toi en bas.</span>';return}users.push({n,e,p});localStorage.setItem('mu_users',JSON.stringify(users));document.getElementById('regMsg').innerHTML='<span class="success">✅ Bravo '+n+' ! Compte créé avec succès. Maintenant connecte-toi juste en bas.</span>';updateStats()}
+function login(){let e=document.getElementById('logEmail').value.trim(),p=document.getElementById('logPass').value;let users=JSON.parse(localStorage.getItem('mu_users')||'[]');let u=users.find(x=>x.e==e&&x.p==p);if(u){document.getElementById('logMsg').innerHTML='<span class="success">✅ Bienvenue '+u.n+' ! Tu es connecté.</span>';document.getElementById('userInfo').innerHTML='Connecté comme : <b>'+u.n+'</b> ('+u.e+')';document.getElementById('mySpace').innerHTML='👋 Salut <b>'+u.n+'</b> !<br><br>✅ Ton compte est actif.<br>✅ Tu peux utiliser l’Assistant AI<br>✅ Tu peux discuter dans la Communauté<br>✅ Tu peux demander un Service<br><br>Bienvenue dans TA Maison.';localStorage.setItem('mu_current',JSON.stringify(u))}else{document.getElementById('logMsg').innerHTML='<span class="error">❌ Email ou mot de passe incorrect. Inscris-toi d’abord en haut.</span>'}}
+function logout(){localStorage.removeItem('mu_current');document.getElementById('mySpace').innerHTML='Tu es déconnecté. Reconnecte-toi.';document.getElementById('logMsg').innerHTML='Déconnecté. À bientôt !'}
+function quickAsk(t){document.getElementById('aiInput').value=t;askAI()}
+async function askAI(){let q=document.getElementById('aiInput').value.trim();if(!q)return;let chat=document.getElementById('aiChat');chat.innerHTML+='<div class="msg"><b>Toi:</b> '+q+'</div>';document.getElementById('aiInput').value='';let tmp=document.createElement('div');tmp.className='msg';tmp.innerHTML='<b>AI:</b> Je réfléchis...';chat.appendChild(tmp);chat.scrollTop=chat.scrollHeight;let rep='';let low=q.toLowerCase();
+if(low.includes('bonjour')||low.includes('salut'))rep='Bonjour ! Bienvenue à La Maison Univers AI 👋 Je suis là pour t’aider. Tu veux de l’aide pour les devoirs, le business, une lettre ou une recherche ? Dis-moi.';
+else if(low.includes('qui es')||low.includes('maison univers'))rep='Je suis l’Assistant de LA MAISON UNIVERS AI, créé à Bamako au Mali 🇲🇱. Je peux t’aider à apprendre, chercher, écrire, traduire et créer. Comme ChatGPT, mais dans ta Maison, en français simple.';
+else if(low.includes('business')&&low.includes('bamako'))rep='Excellente idée ! À Bamako, 3 business qui marchent : 1) Vente en ligne (habits, téléphones), 2) Service de livraison, 3) Formation / aide aux devoirs. Tu as combien comme budget de départ ? Dis-moi et je te fais un plan complet.';
+else if(low.includes('lettre'))rep='Je t’aide pour ta lettre ! Voici la structure : 1) Ton nom + date en haut, 2) Objet : ... , 3) Madame/Monsieur, 4) Explique ta demande en 3 phrases, 5) Merci + Signature. Dis-moi : c’est une lettre pour quoi ? École, travail, administration ? Je te l’écris complète.';
+else if(low.includes('devoir')||low.includes('exposé')||low.includes('math'))rep='On va réussir ton devoir ensemble ! Dis-moi : c’est quelle matière et c’est quoi le sujet exact ? Exemple : "Exposé sur le Mali" ou "Exercice de maths". Je te donne le plan + la réponse expliquée.';
+else if(low.includes('traduis')||low.includes('anglais'))rep='Pour traduire : "Bonjour" en anglais = "Hello", "Merci" = "Thank you", "Comment ça va ?" = "How are you ?". Dis-moi la phrase exacte que tu veux traduire et je te la traduis en anglais, bambara ou français.';
+else if(low.includes('mali')||low.includes('bamako'))rep='Le Mali est un grand pays d’Afrique de l’Ouest. Sa capitale est Bamako. Langues : français + bambara. Le Mali est connu pour sa culture, sa musique, son histoire avec l’Empire du Mali et Tombouctou. Tu veux un exposé complet sur le Mali ? Dis "oui, exposé Mali" et je te le prépare.';
+else if(low.includes('merci'))rep='De rien ! C’est ma mission dans La Maison Univers AI. Tu as une autre question ? Je suis là 24h/24.';
+else{try{let r=await fetch('https://fr.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(q));let d=await r.json();if(d.extract)rep=d.extract.slice(0,700)+'... <br><br>(Source: Wikipédia - La Maison Univers AI)';else rep='Très bonne question sur "'+q+'". Voici mon conseil : 1) Définis ton objectif, 2) Cherche 3 informations clés, 3) Je t’aide à écrire la réponse. Dis-moi plus de détails : c’est pour l’école, le business ou juste pour savoir ?'}catch(e){rep='Merci pour ta question sur "'+q+'". Dis-moi plus de détails et je te donne une réponse complète, étape par étape. C’est pour l’école, le business ou un projet ?'}}
+tmp.innerHTML='<b>AI:</b> '+rep;chat.scrollTop=chat.scrollHeight}
+async function rechercher(){let q=document.getElementById('searchInput').value.trim();if(!q)return;let box=document.getElementById('searchResult');box.innerHTML='<div class="card">🔍 Recherche mondiale en cours pour : <b>'+q+'</b>...</div>';try{let r=await fetch('https://fr.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(q));let d=await r.json();if(d.extract){box.innerHTML='<div class="card"><h2>'+d.title+'</h2><p>'+d.extract.slice(0,900)+'</p><br><a style="color:#FFC700" href="https://fr.wikipedia.org/wiki/'+encodeURIComponent(q)+'" target="_blank">Voir sur Wikipédia →</a> &nbsp; | &nbsp; <a style="color:#FFC700" href="https://www.google.com/search?q='+encodeURIComponent(q)+'" target="_blank">Voir sur Google →</a> &nbsp; | &nbsp; <a style="color:#FFC700" href="https://www.youtube.com/results?search_query='+encodeURIComponent(q)+'" target="_blank">Voir Vidéos →</a></div>'}else{box.innerHTML='<div class="card">Pas trouvé sur Wikipédia. <a style="color:#FFC700" href="https://www.google.com/search?q='+encodeURIComponent(q)+'" target="_blank">Chercher "'+q+'" sur Google →</a></div>'}}catch(e){box.innerHTML='<div class="card"><a style="color:#FFC700" href="https://www.google.com/search?q='+encodeURIComponent(q)+'" target="_blank">Chercher "'+q+'" sur Google →</a></div>'}}
+function loadComm(){let m=JSON.parse(localStorage.getItem('mu_msgs')||'[]');document.getElementById('commChat').innerHTML=m.map(x=>'<div class="msg"><b>'+x.n+':</b> '+x.t+'</div>').join('')||'<div class="msg">Aucun message. Sois le premier à parler dans la Maison !</div>';let c=document.getElementById('commChat');c.scrollTop=c.scrollHeight}
+function sendComm(){let n=document.getElementById('commName').value.trim()||'Visiteur';let t=document.getElementById('commMsg').value.trim();if(!t)return;let m=JSON.parse(localStorage.getItem('mu_msgs')||'[]');m.push({n,t});localStorage.setItem('mu_msgs',JSON.stringify(m));document.getElementById('commMsg').value='';loadComm();updateStats()}
+let cur=localStorage.getItem('mu_current');if(cur){try{let u=JSON.parse(cur);document.getElementById('mySpace').innerHTML='👋 Salut <b>'+u.n+'</b> ! Tu es déjà connecté.'}catch(e){}}
+updateStats();loadComm();
+</script>
+</body>
+                                                                                                                                                                                                                                         </html>
